@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     database_name: str = "postgres"
 
     # Gemini API
-    gemini_api_key: str = "AIzaSyCzRQ3CnG0yK8gE8zqVPYDr3eBYOgf0oCc"
+    gemini_api_key: str
     gemini_model: str = "gemini-3.1-pro-preview"
 
     # Chroma DB
