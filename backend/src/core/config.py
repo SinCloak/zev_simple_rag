@@ -31,7 +31,7 @@ class Settings(BaseSettings):
 
     # Gemini API
     gemini_api_key: str = "AIzaSyCzRQ3CnG0yK8gE8zqVPYDr3eBYOgf0oCc"
-    gemini_model: str = "gemini-3.5-pro-preview"
+    gemini_model: str = "gemini-3.1-pro-preview"
 
     # Chroma DB
     chroma_persist_directory: str = "./chroma_db"
