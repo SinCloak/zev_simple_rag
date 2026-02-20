@@ -1,0 +1,35 @@
+# FastAPI & Web
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+python-multipart>=0.0.12
+
+# Database
+sqlalchemy>=2.0.35
+asyncpg>=0.30.0
+alembic>=1.14.0
+
+# Pydantic
+pydantic>=2.10.0
+pydantic-settings>=2.6.0
+
+# Logging
+structlog>=24.4.0
+
+# LangChain & RAG
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-google-genai>=2.0.0
+langchain-chroma>=0.1.4
+langchain-text-splitters>=0.3.0
+chromadb>=0.5.0
+
+# Utilities
+python-dotenv>=1.0.0
+
+# Development (optional)
+black>=24.8.0
+isort>=5.13.2
+mypy>=1.13.0
+pytest>=8.3.0
+pytest-asyncio>=0.24.0
+pre-commit>=4.0.0

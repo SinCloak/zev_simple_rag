@@ -1,54 +1,53 @@
-# Zev Simple RAG Backend
+# Zev 简易 RAG 后端
 
-FastAPI backend for the RAG AI Agent.
+RAG AI 助手的 FastAPI 后端。
 
-## Installation
-
-```bash
-# Using the fixed virtual environment
-D:\PythonVenv\Scripts\python.exe -m pip install poetry
-D:\PythonVenv\Scripts\python.exe -m poetry install
-```
-
-## Running
+## 安装
 
 ```bash
-# Development mode with hot reload
-D:\PythonVenv\Scripts\python.exe -m poetry run uvicorn src.main:app --reload
-
-# Or using the main module directly
-D:\PythonVenv\Scripts\python.exe -m poetry run python -m src.main
+# 使用固定的虚拟环境
+D:\PythonVenv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-## API Documentation
+## 运行
+
+```bash
+# 开发模式（热重载）
+D:\PythonVenv\Scripts\python.exe -m uvicorn src.main:app --reload
+
+# 或直接运行主模块
+D:\PythonVenv\Scripts\python.exe -m src.main
+```
+
+## API 文档
 
 - Swagger UI: http://localhost:8000/docs
 - ReDoc: http://localhost:8000/redoc
 
-## Project Structure
+## 项目结构
 
 ```
 src/
 ├── api/
-│   ├── dependencies.py    # FastAPI dependency injection
+│   ├── dependencies.py    # FastAPI 依赖注入
 │   └── v1/
-│       ├── sessions.py    # Session management endpoints
-│       └── chat.py        # Chat endpoints
+│       ├── sessions.py    # 会话管理接口
+│       └── chat.py        # 聊天接口
 ├── application/
-│   ├── dtos.py            # Pydantic schemas
-│   └── services.py        # Business logic
+│   ├── dtos.py            # Pydantic 模式
+│   └── services.py        # 业务逻辑
 ├── domain/
-│   └── entities.py        # Domain models
+│   └── entities.py        # 领域模型
 ├── infrastructure/
 │   ├── database/
-│   │   ├── models.py      # SQLAlchemy models
-│   │   └── session.py     # DB session management
+│   │   ├── models.py      # SQLAlchemy 模型
+│   │   └── session.py     # 数据库会话管理
 │   ├── ml/
-│   │   └── rag_service.py # RAG with LangChain + Chroma
+│   │   └── rag_service.py # LangChain + Chroma RAG
 │   └── repositories/
 │       └── session_repository.py
 ├── core/
-│   ├── config.py          # Settings
-│   └── logging.py         # Logging configuration
-└── main.py                # FastAPI entry point
+│   ├── config.py          # 配置
+│   └── logging.py         # 日志配置
+└── main.py                # FastAPI 入口
 ```

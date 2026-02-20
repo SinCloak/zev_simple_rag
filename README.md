@@ -1,140 +1,138 @@
-# Zev Simple RAG AI Agent
+# Zev 简易 RAG AI 助手
 
-A simple yet powerful RAG (Retrieval-Augmented Generation) AI Agent with FastAPI backend and Vue3 frontend.
+一个功能强大且易于使用的 RAG（检索增强生成）AI 助手，采用 FastAPI 后端和 Vue3 前端。
 
-## Features
+## 功能特性
 
-- 🤖 **AI Chat**: Conversational interface powered by Gemini 3.5 Pro
-- 📚 **RAG System**: Built-in knowledge base using Chroma vector database
-- 💬 **Session Management**: Chat history and context persistence
-- 📝 **Markdown Rendering**: Beautifully formatted AI responses
-- 📊 **Token Usage**: Detailed token consumption breakdown
-- 🔄 **Streaming Responses**: Real-time AI responses
-- 📖 **Reference Display**: Show sources used for RAG answers
-- 🌐 **Web Search**: Optional web search (configurable)
-- 🧠 **Deep Thinking**: Optional deep thinking mode (configurable)
+- 🤖 **AI 对话**：基于 Gemini 3.5 Pro 的对话界面
+- 📚 **RAG 系统**：内置 Chroma 向量数据库知识库
+- 💬 **会话管理**：聊天历史和上下文持久化
+- 📝 **Markdown 渲染**：美观的 AI 响应格式展示
+- 📊 **Token 统计**：详细的 Token 消耗明细
+- 🔄 **流式响应**：实时 AI 响应
+- 📖 **引用展示**：显示 RAG 答案使用的参考来源
+- 🌐 **网络搜索**：可选网络搜索功能（可配置）
+- 🧠 **深度思考**：可选深度思考模式（可配置）
 
-## Tech Stack
+## 技术栈
 
-### Backend
-- **FastAPI**: Modern, fast Python web framework
-- **SQLAlchemy 2.0**: Async ORM for PostgreSQL
-- **LangChain**: RAG framework
-- **Chroma**: Vector database
-- **Gemini API**: LLM from Google
-- **PostgreSQL**: Persistent storage for sessions
+### 后端
+- **FastAPI**：现代、快速的 Python Web 框架
+- **SQLAlchemy 2.0**：PostgreSQL 异步 ORM
+- **LangChain**：RAG 框架
+- **Chroma**：向量数据库
+- **Gemini API**：Google 的大语言模型
+- **PostgreSQL**：会话持久化存储
 
-### Frontend
-- **Vue 3**: Progressive JavaScript framework
-- **TypeScript**: Type-safe development
-- **Vite**: Fast build tool
-- **Pinia**: State management
-- **Marked**: Markdown parser
-- **Highlight.js**: Code syntax highlighting
+### 前端
+- **Vue 3**：渐进式 JavaScript 框架
+- **TypeScript**：类型安全开发
+- **Vite**：快速构建工具
+- **Pinia**：状态管理
+- **Marked**：Markdown 解析器
+- **Highlight.js**：代码语法高亮
 
-## Project Structure
+## 项目结构
 
 ```
 zev_simple_rag_1/
 ├── backend/
 │   ├── src/
-│   │   ├── api/              # API routes
-│   │   ├── application/      # Application services
-│   │   ├── domain/           # Domain entities
-│   │   ├── infrastructure/   # Database, RAG, repositories
-│   │   ├── core/             # Config, logging
-│   │   └── main.py           # FastAPI entry
-│   ├── knowledge_base/       # Markdown documents
-│   └── pyproject.toml
+│   │   ├── api/              # API 路由
+│   │   ├── application/      # 应用服务
+│   │   ├── domain/           # 领域实体
+│   │   ├── infrastructure/   # 数据库、RAG、仓储
+│   │   ├── core/             # 配置、日志
+│   │   └── main.py           # FastAPI 入口
+│   ├── knowledge_base/       # Markdown 文档
+│   └── requirements.txt
 ├── frontend/
 │   ├── src/
-│   │   ├── api/              # API clients
-│   │   ├── components/       # Vue components
-│   │   ├── router/           # Vue router
-│   │   ├── stores/           # Pinia stores
-│   │   ├── types/            # TypeScript types
-│   │   ├── views/            # Page components
+│   │   ├── api/              # API 客户端
+│   │   ├── components/       # Vue 组件
+│   │   ├── router/           # Vue 路由
+│   │   ├── stores/           # Pinia 状态管理
+│   │   ├── types/            # TypeScript 类型
+│   │   ├── views/            # 页面组件
 │   │   └── main.ts
 │   └── package.json
 └── README.md
 ```
 
-## Quick Start
+## 快速开始
 
-### Prerequisites
+### 环境要求
 - Python 3.10+
 - Node.js 18+
 - PostgreSQL 14+
-- Poetry (for Python dependencies)
 
-### Backend Setup
+### 后端设置
 
-1. **Install dependencies**:
+1. **安装依赖**：
    ```bash
    cd backend
-   D:\PythonVenv\Scripts\python.exe -m pip install poetry
-   D:\PythonVenv\Scripts\python.exe -m poetry install
+   D:\PythonVenv\Scripts\python.exe -m pip install -r requirements.txt
    ```
 
-2. **Configure PostgreSQL**:
-   - Ensure PostgreSQL is running on port 5432
-   - Default credentials: user `postgres`, password `6666`
+2. **配置 PostgreSQL**：
+   - 确保 PostgreSQL 在 5432 端口运行
+   - 默认账号：用户 `postgres`，密码 `6666`
 
-3. **Start the backend**:
+3. **启动后端**：
    ```bash
-   D:\PythonVenv\Scripts\python.exe -m poetry run uvicorn src.main:app --reload
+   D:\PythonVenv\Scripts\python.exe -m uvicorn src.main:app --reload
    ```
 
-   The backend will be available at: http://localhost:8000
-   API docs: http://localhost:8000/docs
+   后端地址：http://localhost:8000
+   API 文档：http://localhost:8000/docs
 
-### Frontend Setup
+### 前端设置
 
-1. **Install dependencies**:
+1. **安装依赖**：
    ```bash
    cd frontend
    npm install
    ```
 
-2. **Start the frontend**:
+2. **启动前端**：
    ```bash
    npm run dev
    ```
 
-   The frontend will be available at: http://localhost:3000
+   前端地址：http://localhost:3000
 
-## Configuration
+## 配置说明
 
-See [CONFIGURATION_GUIDE.md](./CONFIGURATION_GUIDE.md) for detailed configuration options.
+详见 [CONFIGURATION_GUIDE.md](./CONFIGURATION_GUIDE.md) 了解详细配置选项。
 
-## API Endpoints
+## API 接口
 
-### Sessions
-- `POST /api/v1/sessions` - Create a new session
-- `GET /api/v1/sessions` - List all sessions
-- `GET /api/v1/sessions/{id}` - Get session with messages
-- `PUT /api/v1/sessions/{id}` - Update a session
-- `DELETE /api/v1/sessions/{id}` - Delete a session
+### 会话管理
+- `POST /api/v1/sessions` - 创建新会话
+- `GET /api/v1/sessions` - 列出所有会话
+- `GET /api/v1/sessions/{id}` - 获取会话及消息
+- `PUT /api/v1/sessions/{id}` - 更新会话
+- `DELETE /api/v1/sessions/{id}` - 删除会话
 
-### Chat
-- `POST /api/v1/chat` - Send a chat message (non-streaming)
-- `POST /api/v1/chat/stream` - Send a chat message (streaming)
-- `POST /api/v1/chat/ingest` - Ingest documents from knowledge base
+### 聊天
+- `POST /api/v1/chat` - 发送聊天消息（非流式）
+- `POST /api/v1/chat/stream` - 发送聊天消息（流式）
+- `POST /api/v1/chat/ingest` - 从知识库导入文档
 
-## Knowledge Base
+## 知识库
 
-Add your Markdown documents to `backend/knowledge_base/`. The system will automatically:
-- Load `.md` files
-- Split them into chunks
-- Store in Chroma vector database
-- Retrieve relevant documents during chat
+将 Markdown 文档添加到 `backend/knowledge_base/` 目录。系统会自动：
+- 加载 `.md` 文件
+- 将文档分块
+- 存储到 Chroma 向量数据库
+- 对话时检索相关文档
 
-## Database Tables
+## 数据库表
 
-All tables are prefixed with `zev_simple_rag_1_`:
-- `zev_simple_rag_1_sessions` - Chat sessions
-- `zev_simple_rag_1_messages` - Chat messages with token usage and references
+所有表都以 `zev_simple_rag_1_` 为前缀：
+- `zev_simple_rag_1_sessions` - 聊天会话
+- `zev_simple_rag_1_messages` - 聊天消息（含 token 使用和引用）
 
-## License
+## 许可证
 
 MIT

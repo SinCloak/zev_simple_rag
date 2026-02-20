@@ -1,29 +1,29 @@
-# Configuration Guide
+# 配置指南
 
-This project has been pre-configured with the credentials provided. Below is the detailed configuration information.
+本项目已使用提供的凭证预配置完成。以下是详细的配置信息。
 
-## Credentials Summary
+## 凭证摘要
 
-| Service | Credential | Value |
-|---------|-----------|-------|
-| **Gemini API Key** | `gemini_api_key` | `AIzaSyCzRQ3CnG0yK8gE8zqVPYDr3eBYOgf0oCc` |
-| **PostgreSQL** | Host | `localhost` |
-| **PostgreSQL** | Port | `5432` |
-| **PostgreSQL** | User | `postgres` |
-| **PostgreSQL** | Password | `6666` |
-| **PostgreSQL** | Database | `postgres` |
+| 服务 | 配置项 | 值 |
+|------|--------|-----|
+| **Gemini API 密钥** | `gemini_api_key` | `AIzaSyCzRQ3CnG0yK8gE8zqVPYDr3eBYOgf0oCc` |
+| **PostgreSQL** | 主机 | `localhost` |
+| **PostgreSQL** | 端口 | `5432` |
+| **PostgreSQL** | 用户 | `postgres` |
+| **PostgreSQL** | 密码 | `6666` |
+| **PostgreSQL** | 数据库 | `postgres` |
 
-## Backend Configuration
+## 后端配置
 
-### Environment Variables
+### 环境变量
 
-Create a `backend/.env` file (optional - defaults are already set):
+创建 `backend/.env` 文件（可选 - 默认值已设置）：
 
 ```env
-# Application
+# 应用
 DEBUG=true
 
-# Database
+# 数据库
 DATABASE_HOST=localhost
 DATABASE_PORT=5432
 DATABASE_USER=postgres
@@ -34,83 +34,83 @@ DATABASE_NAME=postgres
 GEMINI_API_KEY=AIzaSyCzRQ3CnG0yK8gE8zqVPYDr3eBYOgf0oCc
 GEMINI_MODEL=gemini-3.5-pro-preview
 
-# Chroma DB
+# Chroma 数据库
 CHROMA_PERSIST_DIRECTORY=./chroma_db
 CHROMA_COLLECTION_NAME=zev_simple_rag_1_docs
 
-# Knowledge Base
+# 知识库
 KNOWLEDGE_BASE_PATH=./knowledge_base
 
 # CORS
 BACKEND_CORS_ORIGINS=["http://localhost:3000","http://localhost:5173"]
 ```
 
-### Configuration File
+### 配置文件
 
-The main configuration is in `backend/src/core/config.py`. All default values are pre-configured.
+主配置位于 `backend/src/core/config.py`。所有默认值都已预配置。
 
-## Frontend Configuration
+## 前端配置
 
-Create a `frontend/.env.development` file (optional):
+创建 `frontend/.env.development` 文件（可选）：
 
 ```env
 VITE_API_BASE_URL=http://localhost:8000
 ```
 
-## Database Setup
+## 数据库设置
 
 ### PostgreSQL
 
-Ensure PostgreSQL is installed and running:
+确保 PostgreSQL 已安装并运行：
 
 ```bash
-# Check if PostgreSQL is running (Windows)
-# Use Services.msc or pgAdmin
+# 检查 PostgreSQL 是否运行（Windows）
+# 使用 Services.msc 或 pgAdmin
 
-# Or via command line (if in PATH)
+# 或通过命令行（如果已添加到 PATH）
 psql --version
 ```
 
-### Database Tables
+### 数据库表
 
-The application will automatically create the following tables on startup:
-- `zev_simple_rag_1_sessions` - Chat sessions
-- `zev_simple_rag_1_messages` - Chat messages
+应用会在启动时自动创建以下表：
+- `zev_simple_rag_1_sessions` - 聊天会话
+- `zev_simple_rag_1_messages` - 聊天消息
 
-No manual migrations needed.
+无需手动迁移。
 
-## Knowledge Base
+## 知识库
 
-### Adding Documents
+### 添加文档
 
-1. Add your Markdown documents to `backend/knowledge_base/`
-2. The system will automatically ingest them on startup
-3. Or manually trigger ingestion via API:
+1. 将 Markdown 文档添加到 `backend/knowledge_base/`
+2. 系统会在启动时自动导入
+3. 或通过 API 手动触发导入：
    ```bash
    curl -X POST http://localhost:8000/api/v1/chat/ingest
    ```
 
-### Document Structure
+### 文档结构
 
-The knowledge base is pre-populated with:
-- Gemini API documentation
-- LangChain documentation
-- Chroma DB documentation
+知识库已预填充：
+- Gemini API 文档
+- LangChain 文档
+- Chroma DB 文档
 
-## Running the Application
+## 运行应用
 
-### Start Backend
+### 启动后端
 
 ```bash
 cd backend
-D:\PythonVenv\Scripts\python.exe -m poetry install
-D:\PythonVenv\Scripts\python.exe -m poetry run uvicorn src.main:app --reload
+D:\PythonVenv\Scripts\python.exe -m pip install -r requirements.txt
+D:\PythonVenv\Scripts\python.exe -m uvicorn src.main:app --reload
 ```
 
-Backend URL: http://localhost:8000
-API Docs: http://localhost:8000/docs
+后端地址：http://localhost:8000
+API 文档：http://localhost:8000/docs
 
-### Start Frontend
+### 启动前端
 
 ```bash
 cd frontend
@@ -118,27 +118,27 @@ npm install
 npm run dev
 ```
 
-Frontend URL: http://localhost:3000
+前端地址：http://localhost:3000
 
-## API Usage Examples
+## API 使用示例
 
-### Create a Session
+### 创建会话
 
 ```bash
 curl -X POST http://localhost:8000/api/v1/sessions \
   -H "Content-Type: application/json" \
-  -d '{"title": "My Chat"}'
+  -d '{"title": "我的聊天"}'
 ```
 
-### Send a Chat Message (Streaming)
+### 发送聊天消息（流式）
 
 ```javascript
-// Using the EventSource API in browser
+// 在浏览器中使用 EventSource API
 const response = await fetch('/api/v1/chat/stream', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
-    message: 'What is RAG?',
+    message: '什么是 RAG？',
     session_id: 'your-session-uuid',
     enable_web_search: false,
     enable_deep_thinking: false
@@ -146,43 +146,43 @@ const response = await fetch('/api/v1/chat/stream', {
 });
 ```
 
-## Troubleshooting
+## 故障排查
 
-### Backend won't start
+### 后端无法启动
 
-- Check PostgreSQL is running on port 5432
-- Verify PostgreSQL credentials (user: postgres, password: 6666)
-- Check that the Python virtual environment is correct: `D:\PythonVenv\Scripts\python.exe`
+- 检查 PostgreSQL 是否在 5432 端口运行
+- 验证 PostgreSQL 凭证（用户：postgres，密码：6666）
+- 检查 Python 虚拟环境是否正确：`D:\PythonVenv\Scripts\python.exe`
 
-### Frontend can't connect to backend
+### 前端无法连接后端
 
-- Ensure backend is running on http://localhost:8000
-- Check CORS settings in `backend/src/core/config.py`
-- Verify the API proxy in `frontend/vite.config.ts`
+- 确保后端在 http://localhost:8000 运行
+- 检查 `backend/src/core/config.py` 中的 CORS 设置
+- 验证 `frontend/vite.config.ts` 中的 API 代理
 
-### RAG not returning relevant results
+### RAG 未返回相关结果
 
-- Check that documents were ingested (call `/api/v1/chat/ingest`)
-- Verify Chroma DB is created in `backend/chroma_db/`
-- Check that documents are in Markdown format
+- 检查文档是否已导入（调用 `/api/v1/chat/ingest`）
+- 验证 Chroma DB 是否在 `backend/chroma_db/` 创建
+- 检查文档是否为 Markdown 格式
 
 ## Gemini API
 
-The Gemini API key is pre-configured:
+Gemini API 密钥已预配置：
 - API Key: `AIzaSyCzRQ3CnG0yK8gE8zqVPYDr3eBYOgf0oCc`
 - Model: `gemini-3.5-pro-preview`
 
-To change the model, update `GEMINI_MODEL` in your `.env` file.
+要更改模型，请在 `.env` 文件中更新 `GEMINI_MODEL`。
 
-## Git Configuration
+## Git 配置
 
-### GitHub Repository
+### GitHub 仓库
 
-- Repository: https://github.com/SinCloak/zev_simple_rag
-- Email: zeagglefkus@gmail.com
-- Password: zHZ48484
+- 仓库：https://github.com/SinCloak/zev_simple_rag
+- 邮箱：zeagglefkus@gmail.com
+- 密码：zHZ48484
 
-To push changes:
+推送更改：
 
 ```bash
 git remote add origin https://github.com/SinCloak/zev_simple_rag.git
@@ -190,6 +190,6 @@ git branch -M main
 git push -u origin main
 ```
 
-When prompted for credentials:
-- Username: zeagglefkus@gmail.com
-- Password: zHZ48484
+当提示输入凭证时：
+- 用户名：zeagglefkus@gmail.com
+- 密码：zHZ48484
