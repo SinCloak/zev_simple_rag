@@ -1,5 +1,9 @@
+# IDE
 .idea/
 .claude/
+.vscode/
+
+# Python
 __pycache__/
 *.pyc
 *.pyo
@@ -10,8 +14,28 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+.pytest_cache/
+
+# Environment
 .env
+.env.local
+.env.*.local
 .venv
 venv/
 ENV/
-.vscode/
+
+# Node
+node_modules/
+
+# Database
+*.db
+*.sqlite
+chroma_db/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
