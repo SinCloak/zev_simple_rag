@@ -5,10 +5,8 @@ import os
 from pathlib import Path
 from typing import AsyncGenerator, Dict, List, Optional, Tuple
 
-from langchain.chains import create_retrieval_chain
-from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_chroma import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -28,7 +26,6 @@ class RAGService:
         self.embeddings: Optional[GoogleGenerativeAIEmbeddings] = None
         self.vector_store: Optional[Chroma] = None
         self.retriever = None
-        self.rag_chain = None
         self._initialized = False
 
     def initialize(self) -> None:
@@ -71,41 +68,12 @@ class RAGService:
                 search_kwargs={"k": 4},
             )
 
-            # Create RAG chain
-            self._create_rag_chain()
-
             self._initialized = True
             logger.info("RAG service initialized successfully")
 
         except Exception as e:
             logger.error("Failed to initialize RAG service", error=str(e))
             raise RuntimeError(f"RAG initialization failed: {e}") from e
-
-    def _create_rag_chain(self) -> None:
-        """Create the RAG chain with proper prompt template."""
-        if not self.llm or not self.retriever:
-            raise RuntimeError("RAG components not initialized")
-
-        # System prompt for RAG
-        system_prompt = """You are a helpful AI assistant. Use the following pieces of retrieved context to answer the user's question.
-If you don't know the answer, just say that you don't know, don't try to make up an answer.
-Keep the answer concise and well-structured using markdown formatting where appropriate.
-
-Context:
-{context}
-"""
-
-        prompt = ChatPromptTemplate.from_messages(
-            [
-                ("system", system_prompt),
-                MessagesPlaceholder(variable_name="chat_history", optional=True),
-                ("human", "{input}"),
-            ]
-        )
-
-        # Create the chain
-        question_answer_chain = create_stuff_documents_chain(self.llm, prompt)
-        self.rag_chain = create_retrieval_chain(self.retriever, question_answer_chain)
 
     def is_initialized(self) -> bool:
         """Check if the service is initialized."""
@@ -187,29 +155,47 @@ Context:
         Returns:
             Tuple of (answer, referenced_documents, token_usage)
         """
-        if not self.rag_chain:
-            raise RuntimeError("RAG chain not initialized")
+        if not self.llm or not self.retriever:
+            raise RuntimeError("RAG service not initialized")
 
         try:
-            # Format chat history for LangChain
-            formatted_history = []
+            # First retrieve relevant documents
+            docs = await self.retriever.ainvoke(question)
+
+            # Format context
+            context = "\n\n".join([
+                f"Source: {doc.metadata.get('source', 'unknown')}\n{doc.page_content}"
+                for doc in docs
+            ])
+
+            # Build prompt
+            system_prompt = f"""You are a helpful AI assistant. Use the following pieces of retrieved context to answer the user's question.
+If you don't know the answer, just say that you don't know, don't try to make up an answer.
+Keep the answer concise and well-structured using markdown formatting where appropriate.
+
+Context:
+{context}
+"""
+
+            messages = [
+                ("system", system_prompt),
+            ]
+
+            # Add chat history
             if chat_history:
                 for msg in chat_history:
                     if msg.get("role") == "user":
-                        formatted_history.append(("human", msg.get("content", "")))
+                        messages.append(("human", msg.get("content", "")))
                     elif msg.get("role") == "assistant":
-                        formatted_history.append(("ai", msg.get("content", "")))
+                        messages.append(("ai", msg.get("content", "")))
 
-            # Invoke RAG chain
-            result = await self.rag_chain.ainvoke({
-                "input": question,
-                "chat_history": formatted_history,
-            })
+            messages.append(("human", question))
 
-            answer = result.get("answer", "")
-            docs = result.get("context", [])
+            # Get response
+            response = await self.llm.ainvoke(messages)
+            answer = response.content if hasattr(response, 'content') else str(response)
 
-            # Token usage - Gemini provides this differently
+            # Token usage
             token_usage = {
                 "input_tokens": None,
                 "output_tokens": None,
