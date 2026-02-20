@@ -48,7 +48,7 @@ class RAGService:
 
             # Initialize embeddings
             self.embeddings = GoogleGenerativeAIEmbeddings(
-                model="models/embedding-001",
+                model="text-embedding-004",
                 google_api_key=settings.gemini_api_key,
             )
 

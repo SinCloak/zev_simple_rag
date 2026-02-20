@@ -1,4 +1,6 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
+import { sessionsApi } from './sessions'
+import { chatApi } from './chat'
 
 const service: AxiosInstance = axios.create({
   baseURL: '/api',
@@ -30,3 +32,4 @@ service.interceptors.response.use(
 )
 
 export default service
+export { sessionsApi, chatApi }
